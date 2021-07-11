@@ -48,10 +48,8 @@ const getPageNotices = async () => {
         };
       });
 
-      return noticesArray.length !== 0 ? noticesArray : "No notices found";
+      return noticesArray;
     }
-
-    return "No notices found";
   });
 
   await browser.close();
@@ -65,29 +63,36 @@ const sendNoticesToChat = async (chatId) => {
 
   const notices = await getPageNotices();
 
-  let noticeString = ``;
-  notices.forEach((notice) => {
-    noticeString =
-      noticeString +
-      `${notice.updated_at}\n*${notice.title}*\n${notice.description}\n\n`;
-  });
+  if (notices.length > 0) {
+    let noticeString = ``;
+    notices.forEach((notice) => {
+      noticeString =
+        noticeString +
+        `${notice.updated_at}\n*${notice.title}*\n${notice.description}\n\n`;
+    });
 
-  bot.sendMessage(chatId, noticeString, { parse_mode: "MarkdownV2" });
-  bot.sendPhoto(chatId, "./screenshot.png");
+    bot.sendMessage(chatId, noticeString, { parse_mode: "MarkdownV2" });
+    bot.sendPhoto(chatId, "./screenshot.png");
+
+    console.log(`Notices sent.`);
+  } else {
+    bot.sendMessage(chatId, "Oops, no notices found.");
+    console.error("No notices found.");
+  }
 };
 
 // Run the Telegram bot
 bot.onText(/\/update/, (msg) => {
-  sendNoticesToChat(msg.chat.id);
-
   const date = new Date();
-  console.log(`UPDATE COMMAND: Notices sent on ${date}`);
+  console.log(`\nUPDATE COMMAND (${date}):`);
+
+  sendNoticesToChat(msg.chat.id);
 });
 
 // Run the job every 30mins
 cron.schedule("*/30 * * * *", () => {
-  sendNoticesToChat(-535110785);
-
   const date = new Date();
-  console.log(`CRON JOB: Notices sent on ${date}`);
+  console.log(`\nCRON JOB (${date}):`);
+
+  sendNoticesToChat(-535110785);
 });
