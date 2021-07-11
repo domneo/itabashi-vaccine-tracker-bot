@@ -94,5 +94,5 @@ cron.schedule("*/30 * * * *", () => {
   const date = new Date();
   console.log(`\nCRON JOB (${date}):`);
 
-  sendNoticesToChat(-535110785);
+  sendNoticesToChat(process.env.GROUP_CHAT_ID);
 });
