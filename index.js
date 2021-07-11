@@ -74,7 +74,17 @@ const sendNoticesToChat = async (chatId) => {
 };
 
 // Run the Telegram bot
-bot.onText(/\/update/, (msg) => sendNoticesToChat(msg.chat.id));
+bot.onText(/\/update/, (msg) => {
+  sendNoticesToChat(msg.chat.id);
+
+  const date = new Date();
+  console.log(`UPDATE COMMAND: Notices sent on ${date}`);
+});
 
 // Run the job every 30mins
-cron.schedule("*/30 * * * *", () => sendNoticesToChat(-535110785));
+cron.schedule("*/30 * * * *", () => {
+  sendNoticesToChat(-535110785);
+
+  const date = new Date();
+  console.log(`CRON JOB: Notices sent on ${date}`);
+});
