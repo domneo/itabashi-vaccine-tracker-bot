@@ -1,0 +1,19 @@
+{
+  "name": "itabashi-vaccine-notice-tracker",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "type": "module",
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@google-cloud/translate": "^6.2.4",
+    "dotenv": "^10.0.0",
+    "node-cron": "^3.0.0",
+    "node-telegram-bot-api": "^0.53.0",
+    "puppeteer": "^10.1.0"
+  }
+}
