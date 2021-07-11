@@ -65,11 +65,14 @@ const sendNoticesToChat = async (chatId) => {
 
   const notices = await getPageNotices();
 
+  let noticeString = ``;
   notices.forEach((notice) => {
-    const noticeString = `${notice.updated_at}\n*${notice.title}*\n${notice.description}`;
-    bot.sendMessage(chatId, noticeString, { parse_mode: "MarkdownV2" });
+    noticeString =
+      noticeString +
+      `${notice.updated_at}\n*${notice.title}*\n${notice.description}\n\n`;
   });
 
+  bot.sendMessage(chatId, noticeString, { parse_mode: "MarkdownV2" });
   bot.sendPhoto(chatId, "./screenshot.png");
 };
 
