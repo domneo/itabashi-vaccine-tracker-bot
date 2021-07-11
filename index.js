@@ -56,8 +56,6 @@ const getPageNotices = async () => {
 
   await browser.close();
 
-  console.log(notices);
-
   return notices;
 };
 
