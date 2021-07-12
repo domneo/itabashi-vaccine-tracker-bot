@@ -90,7 +90,7 @@ bot.onText(/\/update/, (msg) => {
 });
 
 // Run the job every 30mins
-cron.schedule("*/30 * * * *", () => {
+cron.schedule("0 */2 * * *", () => {
   const date = new Date();
   console.log(`\nCRON JOB (${date}):`);
 
